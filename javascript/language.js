@@ -110,7 +110,7 @@ var lang = {
 	en: {
 		com: {
 			title: "Lightning Matrix",
-			copysuccess: "Copy Succeeded",
+			copySuccess: "Copy Succeeded",
 			balance: "Balance",
 			noid: "Recommender Cannot Be Empty! ",
 			view: "View",
