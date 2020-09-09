@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Lightning Matrix</title>
+		<link rel="stylesheet" href="stylesheet/common.css" />
+		<link rel="stylesheet" href="stylesheet/style.css" />
+		<link rel="icon" type="image/x-icon" href='images/favicon.ico' />
+		<script type="text/javascript" src="javascript/jquery.js"></script>
+		<script type="text/javascript" src="javascript/language.js"></script>
+		<script type="text/javascript" src="javascript/vue.js"></script>
+		<script type="text/javascript" src="javascript/global.js"></script>
+		<script type="text/javascript" src="javascript/data.js"></script>
+		<script type="text/javascript" src="javascript/tronweb.js"></script>
+		<script type="text/javascript" src="javascript/clipboard.min.js.js"></script>
+
+		<script type="text/javascript">
+			var TAG = "INDEX";
+		</script>
+	</head>
+
+	<body>
+		<div id="app" v-cloak>
+
+			<div class="header">
+				<!--header start-->
+				<div class="top">
+
+					<div class="lang_btn" @click="displayMenu">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+
+					<div class="lang_list" v-show="menu">
+
+						<ul>
+							<li v-for="(value,index) in langList" @click="changeLang(index)">{{value}}</li>
+						</ul>
+					</div>
+				</div>
+				<div class="container">
+
+					<div class="logo"><a :href="'index.html?pid='+pid"><img src="images/logo.png"></a></div>
+					<div class="title"><span>{{langItem.com.title}}</span></div>
+
+					<div class="intro">
+						<p>{{langItem.index.intro}}</p>
+					</div>
+
+				</div>
+
+			</div>
+			<!--header end-->
+
+			<div class="content_box">
+
+				<div class="click_btn">
+					<a :href="'reg.html?pid='+pid" v-if="playerID==0">{{langItem.index.register}}</a>
+					<a :href="'main.html?userID='+playerID" v-if="playerID!=0">{{langItem.index.register}}</a>
+					<a :href="'login.html?pid='+pid" v-if="playerID==0">{{langItem.index.longin}}</a>
+					<a :href="'main.html?userID='+playerID" v-if="playerID!=0">{{langItem.index.longin}}</a>
+					<a href="lookUser.html">{{langItem.index.look}}</a>
+				</div>
+
+
+
+				<div class="item_box">
+
+					<h3 class="common_title">{{langItem.index.feature.title}}</h3>
+					<p class="common_intro">{{langItem.index.feature.intro}}</p>
+					<ul>
+						<li>
+							<dl>
+								<dt><img src="images/mit_01.png" /></dt>
+								<dd>
+									<p class="item_title">{{langItem.index.feature.title01}}</p>
+									<p class="item_txt">{{langItem.index.feature.intro01}}</p>
+								</dd>
+							</dl>
+						</li>
+
+						<li>
+							<dl>
+								<dt><img src="images/mit_02.png" /></dt>
+								<dd>
+									<p class="item_title">{{langItem.index.feature.title02}}</p>
+									<p class="item_txt">{{langItem.index.feature.intro02}}</p>
+								</dd>
+							</dl>
+						</li>
+
+						<li>
+							<dl>
+								<dt><img src="images/mit_03.png" /></dt>
+								<dd>
+									<p class="item_title">{{langItem.index.feature.title03}}</p>
+									<p class="item_txt">{{langItem.index.feature.intro03}}</p>
+								</dd>
+							</dl>
+						</li>
+
+						<li>
+							<dl>
+								<dt><img src="images/mit_04.png" /></dt>
+								<dd>
+									<p class="item_title">{{langItem.index.feature.title04}}</p>
+									<p class="item_txt">{{langItem.index.feature.intro04}}</p>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+
+
+				<div class="partner_data">
+
+					<h3 class="common_title">{{langItem.index.data.title}}</h3>
+					<p class="partner_intro">{{langItem.index.data.intro}}<br /> {{langItem.index.data.address}}：
+						<br />
+						<a :href="'https://tronscan.org/#/contract/'+contractAddress">{{contractAddress}}</a>
+					</p>
+					
+
+
+				</div>
+
+
+				<div class="explain">
+					<h3 class="common_title">{{langItem.index.rule.title}}</h3>
+					<p class="explain_img"><img src="images/intro.png" /></p>
+					<div class="text">【{{langItem.com.title}}】<br />{{langItem.index.rule.intro}}</div>
+				</div>
+			</div>
+			<loading v-show="showLoading"></loading>
+		</div>
+
+		<script type="text/javascript" src="javascript/index.js "></script>
+
+	</body>
+
+</html>

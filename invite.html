@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Lightning Matrix</title>
+		<link rel="stylesheet" href="stylesheet/common.css" />
+		<link rel="stylesheet" href="stylesheet/style.css" />
+		<link rel="icon" type="image/x-icon" href='images/favicon.ico' />
+		<script type="text/javascript" src="javascript/jquery.js"></script>
+		<script type="text/javascript" src="javascript/language.js"></script>
+		<script type="text/javascript" src="javascript/vue.js"></script>
+		<script type="text/javascript" src="javascript/global.js"></script>
+		<script type="text/javascript" src="javascript/data.js"></script>
+		<script type="text/javascript" src="javascript/tronweb.js"></script>
+		<script type="text/javascript" src="javascript/clipboard.min.js.js"></script>
+
+		<script type="text/javascript">
+			var TAG = "INVITE";
+		</script>
+	</head>
+
+	<body>
+		<div id="app" v-cloak>
+
+			<div class="header">
+				<!--header start-->
+
+				<div class="top">
+					<div class="nav">
+						
+						<a href="javascript:void(0)" @click="profile">{{langItem.member.myInfo}}</a>					
+					    <a href="javascript:void(0)" @click="panel">{{langItem.member.panel}}</a>
+						<a href="lookUser.html">{{langItem.member.look}}</a>
+					</div>
+
+
+					<div class="lang_btn" @click="displayMenu">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+
+					<div class="lang_list" v-show="menu">
+
+						<ul>
+							<li v-for="(value,index) in langList" @click="changeLang(index)">{{value}}</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="container">
+
+					<div class="logo"><a :href="'index.html?pid='+pid"><img src="images/logo.png"></a></div>
+					<div class="title"><span>{{langItem.com.title}}</span></div>
+
+				</div>
+
+			</div>
+			<!--header end-->
+
+			<div class="content_box">
+
+				<div class="my_ID">{{langItem.member.myID}}：<span class="red">{{playerID}}</span></div>
+				<div class="my_income">{{langItem.member.totalIncome}}：<span class="red">{{myIncome}} TRX</span>，{{langItem.member.totalInvite}}：<span class="red">{{myInviteCount}}</span> 人</div>
+				<div class="my_income">{{langItem.com.balance}}：<span class="red">{{trxBalance}} TRX</span></div>
+				<div class="member_info">
+					<h3>{{langItem.member.memberInfo}}</h3>
+					<ul>
+						<li>{{langItem.member.superiorID}}：{{parentID}}</li>
+						<li>{{langItem.member.address}}：
+							<span id="address">{{myAddress}}</span> 
+							<button  class="btn copyAddress"   :data-clipboard-text="myAddress">{{langItem.member.copy}}</button>
+						</li>
+						<li>
+							{{langItem.member.inviteLink}}：
+							<span id="url">{{formatMyURL}}</span>
+							<button  class="btn copyAddress"   :data-clipboard-text="formatMyURL">{{langItem.member.copy}}</button>
+						</li>
+					</ul>
+					
+				</div>
+
+
+				
+				<div class="history">
+					<h3>{{langItem.member.invitationList}}</h3>
+				
+					<table cellspacing="0" cellpadding="0">
+						<tr>
+							<th>ID</th>
+							<th width="80">{{langItem.member.time}}</th>
+							<th  width="28%">{{langItem.member.address}}</th>
+							<th>{{langItem.member.income}}（TRX)</th>
+							<th>{{langItem.member.invites}}</th>
+						</tr>
+						<tr v-for="(value,index) in inviteList">
+							<td>{{value.id}}</td>
+							<td>{{value.time | formatTimeStamp('yyyy-MM-dd hh:mm')}}</td>
+							<td>{{value.address|formatAddress}}</td>
+							<td>{{value.income}}</td>
+							<td>{{value.invite}}</td>
+						</tr>
+						
+						</tr>
+					</table>
+				     <div class="get_page">
+						<em class="circle-left" @click="getInvitePage(-1)">&nbsp;</em> 
+						{{inviteIndex}} / {{invitePageCount}}
+						<em class="circle-right" @click="getInvitePage(1)">&nbsp;</em>
+					</div>
+				</div>
+
+			</div>
+			<!--content_box end-->
+        <layer-up  v-show="copySuccess"  :title="langItem.com.tip" :message="langItem.com.copySuccess"></layer-up>
+
+		<loading v-show="showLoading"></loading>
+		</div>
+
+		<script type="text/javascript" src="javascript/index.js "></script>
+
+	</body>
+
+</html>

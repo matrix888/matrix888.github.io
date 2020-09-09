@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Lightning Matrix</title>
+		<link rel="stylesheet" href="stylesheet/common.css" />
+		<link rel="stylesheet" href="stylesheet/style.css" />
+		<link rel="icon" type="image/x-icon" href='images/favicon.ico' />
+		<script type="text/javascript" src="javascript/jquery.js"></script>
+		<script type="text/javascript" src="javascript/language.js"></script>
+		<script type="text/javascript" src="javascript/vue.js"></script>
+		<script type="text/javascript" src="javascript/global.js"></script>
+		<script type="text/javascript" src="javascript/data.js"></script>
+		<script type="text/javascript" src="javascript/tronweb.js"></script>
+		<script type="text/javascript" src="javascript/clipboard.min.js.js"></script>
+
+		<script type="text/javascript">
+			var TAG = "DETAIL";
+		</script>
+	</head>
+
+	<body>
+		<div id="app" v-cloak>
+
+			<div class="header">
+				<!--header start-->
+
+				<div class="top">
+					<div class="nav">
+						
+						<a href="javascript:void(0)" @click="profile">{{langItem.member.myInfo}}</a>					
+					    <a href="javascript:void(0)" @click="panel">{{langItem.member.panel}}</a>
+						<a href="lookUser.html">{{langItem.member.look}}</a>
+					</div>
+
+					<div class="lang_btn" @click="displayMenu">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+
+					<div class="lang_list" v-show="menu">
+
+						<ul>
+							<li v-for="(value,index) in langList" @click="changeLang(index)">{{value}}</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="container">
+
+					<div class="logo"><a :href="'index.html?pid='+pid"><img src="images/logo.png"></a></div>
+					<div class="title"><span>{{langItem.com.title}}</span></div>
+
+				</div>
+
+			</div>
+			<!--header end-->
+
+			<div class="content_box">
+
+				<div class="my_ID">{{langItem.matrix.currentID}}：<span class="red">{{userID}}</span></div>
+
+				<div class="my_info">
+					<div class="reward">{{matrixDetail.income}} TRX</div>
+					<div class="my_invite">{{matrixDetail.partners}}</div>
+					<div class="clear"></div>
+				</div>
+
+				<div class="matrix_detail">
+					<div class="user_id">
+						<a :href="'main.html?userID='+parentID">{{langItem.member.superiorID}}：{{parentID}}</a>
+					</div>
+					<div class="border-gradient btn-nav">
+						<div class="btn-nav_prev">
+							<a href="javascript:void(0)" @click="next(-1)">
+								<i class="fas circle-left" :class={'disabled':mixID==1}>&nbsp;</i>
+							</a>
+							<span class="btn-nav_page">
+								<font v-if="mixID==1">{{mixID}}</font>
+								<font v-else>{{mixID-1}}</font>
+							</span>
+						</div>
+
+						<div class="btn-nav_next">
+							<span class="btn-nav_page">
+								<font v-if="mixID==10">{{mixID}}</font>
+								<font v-else>{{mixID+1}}</font>
+							</span>
+							<a href="javascript:void(0)" @click="next(1)">
+								<i class="fas circle-right" :class={'disabled':mixID==9}>&nbsp;</i>
+							</a>
+						</div>
+                     
+						<div class="matrix_list">
+							<a :href="'main.html?userID='+userID" class="matrix_root">
+								<span class="matrix_level">{{mixID}}</span>
+								<span class="matrix_price">ID {{userID}}</span>
+
+							</a>
+
+							<div class="matrix_line">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+
+							<div class="matrix_children user_level_1">
+								<div class="level_item" :class={'direct':matrixDetail.nodes[0]==1,'glide':matrixDetail.nodes[0]==2,'rise':matrixDetail.nodes[0]==3,'nodata':matrixDetail.nodes[0]==0}>
+									<a :href="'detail.html?userID='+matrixDetail.nodes[6]+'&mixID='+mixID" v-if="matrixDetail.nodes[0]!=0">{{matrixDetail.nodes[6] | toNumber}}</a>
+								</div>
+								<div class="level_item" :class={'direct':matrixDetail.nodes[1]==1,'glide':matrixDetail.nodes[1]==2,'rise':matrixDetail.nodes[1]==3,'nodata':matrixDetail.nodes[1]==0}>
+									<a :href="'detail.html?userID='+matrixDetail.nodes[7]+'&mixID='+mixID" v-if="matrixDetail.nodes[1]!=0">{{matrixDetail.nodes[7] | toNumber}}</a>
+								</div>
+							</div>
+
+							<div class="matrix_children user_level_2">
+								<div class="level_item" :class={'direct':matrixDetail.nodes[2]==1,'glide':matrixDetail.nodes[2]==2,'rise':matrixDetail.nodes[2]==3,'nodata':matrixDetail.nodes[2]==0}>
+									<a :href="'detail.html?userID='+matrixDetail.nodes[8]+'&mixID='+mixID" v-if="matrixDetail.nodes[2]!=0">{{matrixDetail.nodes[8] | toNumber}}</a>
+								</div>
+								<div class="level_item" :class={'direct':matrixDetail.nodes[3]==1,'glide':matrixDetail.nodes[3]==2,'rise':matrixDetail.nodes[3]==3,'nodata':matrixDetail.nodes[3]==0}>
+									<a :href="'detail.html?userID='+matrixDetail.nodes[9]+'&mixID='+mixID" v-if="matrixDetail.nodes[3]!=0">{{matrixDetail.nodes[9] | toNumber}}</a>
+								</div>
+								<div class="level_item" :class={'direct':matrixDetail.nodes[4]==1,'glide':matrixDetail.nodes[4]==2,'rise':matrixDetail.nodes[4]==3,'nodata':matrixDetail.nodes[4]==0}>
+									<a :href="'detail.html?userID='+matrixDetail.nodes[10]+'&mixID='+mixID" v-if="matrixDetail.nodes[4]!=0">{{matrixDetail.nodes[10] | toNumber}}</a>
+								</div>
+								<div class="level_item" :class={'direct':matrixDetail.nodes[5]==1,'glide':matrixDetail.nodes[5]==2,'rise':matrixDetail.nodes[5]==3,'nodata':matrixDetail.nodes[5]==0}>
+									<a :href="'detail.html?userID='+matrixDetail.nodes[11]+'&mixID='+mixID" v-if="matrixDetail.nodes[5]!=0">{{matrixDetail.nodes[11] | toNumber}}</a>
+								</div>
+							</div>
+
+							<div class="detail_loss detail_burn" v-if="matrixDetail.burn > 0 && currentRestart == maxRestart"><span></span>{{langItem.matrix.burn}}</div>
+							<div class="detail_loss detail_skip" v-if="matrixDetail.skip > 0 && currentRestart == maxRestart"><span></span>{{langItem.matrix.skip}}</div>
+
+							<div class="invest_detail">
+								<span></span>{{langItem.matrix.history}} 
+								<em class="circle-left" @click="history(-1)">&nbsp;</em>
+								{{currentRestart}} / {{maxRestart}}
+								<em class="circle-right" @click="history(1)">&nbsp;</em>
+							</div>
+						</div>
+					</div>
+					<div class="matrix_explain">
+						<div><span></span>{{langItem.matrix.direct}}</div>
+						<div><span></span>{{langItem.matrix.glide}}</div>
+						<div><span></span>{{langItem.matrix.rise}}</div>
+						<div><span></span>{{langItem.matrix.burn}}</div>
+						<div><span></span>{{langItem.matrix.skip}}</div>
+					</div>
+				</div><!--matrix_detail end-->
+				
+				<div class="history">
+					<h3>{{langItem.matrix.record}}（{{langItem.matrix.total}} {{logCount}} {{langItem.matrix.strip}}）</h3>
+				
+					<table cellspacing="0" cellpadding="0">
+						<tr>
+							<th width="40">{{langItem.matrix.status}}</th>
+							<th width="90">{{langItem.member.time}}</th>
+							<th>ID</th>
+							<th  width="28%">{{langItem.member.address}}</th>
+							<th>TRX</th>
+						</tr>
+						<tr v-for="(value,index) in matrixHistory">
+							<td class="status" :class={'restart':value.type==1,'glides':value.type==2,'rises':value.type==3,'skips':value.type==4,'burns':value.type==5}><span></span></td>
+							<td>{{value.time | formatTimeStamp('yyyy-MM-dd hh:mm')}}</td>
+							<td>{{value.uid}}</td>
+							<td>{{value.address | formatAddress}}</td>
+							<td>
+								<font v-if="value.type==0">{{value.income}}</font>
+								<font v-if="value.type==1" :class={'reflesh':value.type==1,'up':value.type==3,'down':value.type==2,'sk':value.type==4,'bur':value.type==5}>{{langItem.matrix.reopen}}</font>
+								<font v-if="value.type==2" :class={'reflesh':value.type==1,'up':value.type==3,'down':value.type==2,'sk':value.type==4,'bur':value.type==5}>{{langItem.matrix.rise}}<em v-if="value.income>0">{{value.income}}</em></font>
+								<font v-if="value.type==3" :class={'reflesh':value.type==1,'up':value.type==3,'down':value.type==2,'sk':value.type==4,'bur':value.type==5}>{{langItem.matrix.glide}}<em v-if="value.income>0">{{value.income}}</em></font>
+								<font v-if="value.type==4" :class={'reflesh':value.type==1,'up':value.type==3,'down':value.type==2,'sk':value.type==4,'bur':value.type==5}>{{langItem.matrix.skip}}</font>
+								<font v-if="value.type==5" :class={'reflesh':value.type==1,'up':value.type==3,'down':value.type==2,'sk':value.type==4,'bur':value.type==5}>{{langItem.matrix.burn}}</font>
+							</td>
+						</tr>
+					</table>
+			  	    <div class="get_page">
+						<em class="circle-left" @click="getLogPage(-1)">&nbsp;</em> 
+						{{logIndex}} / {{logPageCount}}
+						<em class="circle-right" @click="getLogPage(1)">&nbsp;</em>
+					</div>
+				</div>
+
+			</div>
+			<!--content_box end-->
+			<loading v-show="showLoading"></loading>
+
+		</div>
+
+		<script type="text/javascript" src="javascript/index.js "></script>
+
+	</body>
+
+</html>
